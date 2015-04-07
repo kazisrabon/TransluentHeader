@@ -1,25 +1,21 @@
 package com.example.bs_36.transluentheader;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ScrollView;
+import android.widget.ImageButton;
 import android.widget.Toast;
+
 
 import com.example.bs_36.transluentheader.adapter.SongAdapter;
 import com.example.bs_36.transluentheader.view.CardView;
-import com.example.bs_36.transluentheader.view.NotifyingScrollView;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
@@ -36,98 +32,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by BS-36 on 4/6/2015.
+ * Created by BS-36 on 3/20/2015.
  */
-public class HomeActivity extends Activity {
+public class MusicFragment extends Activity {
 
+//    LinearLayout linearLayout;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
+    List<CardView> cardViews;
     private AccountHeader.Result headerResult;
     private Drawer.Result result = null;
-    Animation animBlink, animFadeIn, animFadeOut, animRotate, animSequential;
-    ImageView imageStar1, imageStar2, imageStar3, imageStar4, imageStar5, imageStar6, imageStar7, imageStar8;
+
+    android.support.v7.widget.CardView cardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.fragment_music);
+        mRecyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
-        animBlink = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.blink);
-        animFadeIn = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.fade_in);
-        animFadeOut = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.fade_out);
-        animRotate = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.rotate);
-        animSequential = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.sequential);
-        imageStar6 = (ImageView)findViewById(R.id.imageView6);
-        imageStar6.startAnimation(animFadeOut);
-        imageStar2 = (ImageView)findViewById(R.id.imageView2);
-        imageStar2.startAnimation(animFadeIn);
-        imageStar3 = (ImageView)findViewById(R.id.imageView3);
-        imageStar3.startAnimation(animRotate);
-        imageStar4 = (ImageView)findViewById(R.id.imageView4);
-        imageStar4.startAnimation(animRotate);
-        imageStar5 = (ImageView)findViewById(R.id.imageView5);
-        imageStar5.startAnimation(animBlink);
-        imageStar1 = (ImageView)findViewById(R.id.imageView);
-        imageStar1.startAnimation(animSequential);
-        imageStar7 = (ImageView)findViewById(R.id.imageView7);
-        imageStar7.startAnimation(animFadeOut);
-        imageStar8 = (ImageView)findViewById(R.id.imageView8);
-        imageStar8.startAnimation(animBlink);
+        cardView = (android.support.v7.widget.CardView)mRecyclerView.findViewById(R.id.card_view);
+        cardViews = new ArrayList<CardView>();
+        cardViews.add(new CardView("Song 1"));
+        cardViews.add(new CardView("Song 2"));
+        cardViews.add(new CardView("Song 3"));
 
-        animFadeIn.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
+        mAdapter = new SongAdapter(cardViews);
+        mRecyclerView.setAdapter(mAdapter);
 
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                imageStar2.startAnimation(animFadeOut);
-                imageStar7.startAnimation(animFadeOut);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        animFadeOut.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                imageStar6.startAnimation(animFadeIn);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        animSequential.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                imageStar1.startAnimation(animSequential);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
         headerResult = new AccountHeader()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
@@ -155,13 +92,13 @@ public class HomeActivity extends Activity {
                 .withOnDrawerListener(new Drawer.OnDrawerListener() {
                     @Override
                     public void onDrawerOpened(View drawerView) {
-                        Toast.makeText(HomeActivity.this, "onDrawerOpened", Toast.LENGTH_SHORT).show();
-                        KeyboardUtil.hideKeyboard(HomeActivity.this);
+                        Toast.makeText(MusicFragment.this, "onDrawerOpened", Toast.LENGTH_SHORT).show();
+                        KeyboardUtil.hideKeyboard(MusicFragment.this);
                     }
 
                     @Override
                     public void onDrawerClosed(View drawerView) {
-                        Toast.makeText(HomeActivity.this, "onDrawerClosed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MusicFragment.this, "onDrawerClosed", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -172,8 +109,7 @@ public class HomeActivity extends Activity {
                             getActionBar().setTitle(((Nameable) drawerItem).getNameRes());
 
                             if (drawerItem.getIdentifier() == 1) {
-                                startActivity(new Intent(getBaseContext(), MusicFragment.class));
-//                                Toast.makeText(getBaseContext(), "Nothing New", Toast.LENGTH_SHORT).show();
+//                                startActivity(new Intent(getBaseContext(), MusicFragment.class));
                             } else if (drawerItem.getIdentifier() == 2) {
                                 startActivity(new Intent(getBaseContext(), GraphFragment.class));
                             } else if (drawerItem.getIdentifier() == 3) {
@@ -186,8 +122,11 @@ public class HomeActivity extends Activity {
                 .withSavedInstance(savedInstanceState)
                 .withSelectedItem(0)
                 .build();
+    }
 
-//        result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
     }
 }
