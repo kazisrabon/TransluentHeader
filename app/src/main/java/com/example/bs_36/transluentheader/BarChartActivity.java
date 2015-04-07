@@ -68,8 +68,8 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_barchart);
 
         headerResult = new AccountHeader()
@@ -118,16 +118,16 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
                             if (drawerItem.getIdentifier() == 1) {
                                 startActivity(new Intent(getBaseContext(), MusicFragment.class));
                             } else if (drawerItem.getIdentifier() == 2) {
-
+                                startActivity(new Intent(getBaseContext(), GraphFragment.class));
                             } else if (drawerItem.getIdentifier() == 3) {
-                                startActivity(new Intent(getBaseContext(), BarChartActivity.class));
+                                startActivity(new Intent(getBaseContext(), FlexibleSpaceWithImageScrollViewActivity.class));
                             }
                         }
                     }
                 })
                 .withFireOnInitialOnClick(true)
                 .withSavedInstance(savedInstanceState)
-                .withSelectedItem(1)
+                .withSelectedItem(2)
                 .build();
 
         tvX = (TextView) findViewById(R.id.tvXMax);

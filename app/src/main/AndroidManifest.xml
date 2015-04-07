@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.bs_36.transluentheader">
+    package="com.example.bs_36.transluentheader"
+    android:uiOptions="splitActionBarWhenNarrow">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
@@ -21,6 +22,7 @@
             android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay"/>
         <activity android:name=".BarChartActivity"
             android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay"/>
+        <activity android:name=".FlexibleSpaceWithImageScrollViewActivity"/>
     </application>
 
 </manifest>
